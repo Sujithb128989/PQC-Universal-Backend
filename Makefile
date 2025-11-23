@@ -23,13 +23,27 @@ stop-server:
 	@echo "Stopping PQC server container..."
 	$(DOCKER) stop $(SERVER_CONTAINER_NAME)
 
+# Generate Python Protobuf/gRPC code
+codegen:
+	@echo "Generating Python gRPC code..."
+	mkdir -p client/src/pqc_client/generated
+	touch client/src/pqc_client/generated/__init__.py
+	python3 -m grpc_tools.protoc \
+		-I./proto \
+		--python_out=./client/src/pqc_client/generated \
+		--grpc_python_out=./client/src/pqc_client/generated \
+		./proto/pqc.proto ./proto/health.proto
+	@echo "Fixing imports in generated code..."
+	sed -i 's/^import \(.*\)_pb2 as \(.*\)__pb2$/from . import \1_pb2 as \2__pb2/g' \
+		client/src/pqc_client/generated/*_grpc.py
+
 # Install the client CLI tool
-install-client:
+install-client: codegen
 	@echo "Installing client..."
 	pip3 install -e ./client
 
 # Package the client for PyPI
-package-client:
+package-client: codegen
 	@echo "Packaging client..."
 	pip3 install build
 	cd client && python3 -m build
