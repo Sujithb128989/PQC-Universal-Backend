@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package pqc;
+
+// --- Service Definition ---
+
+service PQCStringStore {
+  // Stores a piece of data and returns a unique ID for it.
+  rpc Store(StoreRequest) returns (StoreResponse);
+
+  // Retrieves a piece of data using its unique ID.
+  rpc Retrieve(RetrieveRequest) returns (RetrieveResponse);
+
+  // Rotates the encryption key and re-encrypts the database.
+  rpc RotateKey(RotateKeyRequest) returns (RotateKeyResponse);
+
+  // Uploads a file to the server (streaming).
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse);
+
+  // Downloads a file from the server (streaming).
+  rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse);
+}
+
+// --- Message Definitions ---
+
+message UploadFileRequest {
+  oneof data {
+    FileMetadata metadata = 1;
+    bytes chunk = 2;
+  }
+}
+
+message FileMetadata {
+  string filename = 1;
+}
+
+message UploadFileResponse {
+  string id = 1;
+  uint64 size = 2;
+}
+
+message DownloadFileRequest {
+  string id = 1;
+}
+
+message DownloadFileResponse {
+  bytes chunk = 1;
+}
+
+message RotateKeyRequest {}
+
+message RotateKeyResponse {
+  string status = 1;
+}
+
+message StoreRequest {
+  // The data to be stored securely.
+  string message = 1;
+}
+
+message StoreResponse {
+  // The unique identifier for the stored data.
+  uint64 id = 1;
+}
+
+message RetrieveRequest {
+  // The unique identifier of the data to retrieve.
+  uint64 id = 1;
+}
+
+message RetrieveResponse {
+  // The retrieved data.
+  string message = 1;
+}

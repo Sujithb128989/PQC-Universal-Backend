@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pqc-client"
+version = "0.1.0"
+authors = [
+  { name="Sujith", email="author@example.com" },
+]
+description = "A CLI client for the PQC server."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "grpcio",
+    "grpcio-tools",
+    "click",
+    "grpcio-health-checking",
+]
+
+[project.scripts]
+pqc-client = "pqc_client.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+# CRITICAL: Must explicitly include the generated subpackage
+packages = ["pqc_client", "pqc_client.generated"]
+
+[tool.setuptools.package-data]
+# Include all generated protobuf files
+"pqc_client.generated" = ["*.py"]

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package pqc.v1;
+
+// --- Service Definition ---
+
+service PQCService {
+  // Stores a piece of data and returns a unique ID for it.
+  rpc Store(StoreRequest) returns (StoreResponse);
+
+  // Retrieves a piece of data using its unique ID.
+  rpc Retrieve(RetrieveRequest) returns (RetrieveResponse);
+}
+
+// --- Message Definitions ---
+
+message StoreRequest {
+  // The data to be stored securely.
+  bytes data = 1;
+}
+
+message StoreResponse {
+  // The unique identifier for the stored data.
+  string message_id = 1;
+}
+
+message RetrieveRequest {
+  // The unique identifier of the data to retrieve.
+  string message_id = 1;
+}
+
+message RetrieveResponse {
+  // The retrieved data.
+  bytes data = 1;
+}

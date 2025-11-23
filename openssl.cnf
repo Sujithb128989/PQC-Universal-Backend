@@ -1,0 +1,15 @@
+# OpenSSL configuration file to automatically load and activate the OQS provider.
+
+[openssl_init]
+providers = provider_sect
+
+[provider_sect]
+default = default_sect
+oqsprovider = oqsprovider_sect
+
+[default_sect]
+activate = 1
+
+[oqsprovider_sect]
+module = /opt/openssl/lib64/ossl-modules/oqsprovider.so
+activate = 1
