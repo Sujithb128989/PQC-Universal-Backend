@@ -37,6 +37,7 @@ codegen:
 	sed -i 's/^import \(.*\)_pb2 as \(.*\)__pb2$/from . import \1_pb2 as \2__pb2/g' \
 		client/src/pqc_client/generated/*_grpc.py
 
+
 # Install the client CLI tool
 install-client: codegen
 	@echo "Installing client..."
