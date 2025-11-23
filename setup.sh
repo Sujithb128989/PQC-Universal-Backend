@@ -27,7 +27,6 @@ sudo docker rm pqc-cert-generator > /dev/null 2>&1
 echo -e "${GREEN}Certificates generated successfully.${NC}"
 
 echo -e "\n${YELLOW}Step 4: Running end-to-end integration test...${NC}"
-
 echo "Starting C++ server in the background..."
 CONTAINER_ID=$(sudo docker run -d -p 50051:50051 -p 8080:8080 --name pqc-server-container -v "$(pwd)/certs:/app/certs:ro" pqc-server)
 
@@ -35,7 +34,6 @@ trap 'echo -e "\n${YELLOW}Stopping server...${NC}"; sudo docker stop $CONTAINER_
 
 echo "Waiting for server to initialize..."
 sleep 5
-
 echo "--- Tailing server logs ---"
 sudo docker logs --tail 20 $CONTAINER_ID
 echo "---------------------------"
@@ -43,7 +41,6 @@ echo "---------------------------"
 # The client will be run inside the container to ensure it uses the same OQS-enabled OpenSSL
 echo "Running Python client inside the container..."
 sudo docker exec $CONTAINER_ID /app/scripts/run_client.sh
-
 echo "Testing HTTP Gateway..."
 # Wait for HTTP server to start
 sleep 2
@@ -56,4 +53,4 @@ else
 fi
 
 echo -e "\n${GREEN}--- Integration Test Passed ---${NC}"
-echo -e "${GREEN}--- Setup Complete! ---${NC}"
+echo -e "${GREEN}--- Setup Complete! ---${NC}\n"
