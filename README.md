@@ -117,3 +117,19 @@ We are actively seeking:
 *   **Contributors:** To help implement additional PQC algorithms (e.g., Falcon, SPHINCS+) and enhance the S3 integration.
 
 Please submit issues and pull requests to help make post-quantum security accessible to everyone.
+
+## Acknowledgments & Legal
+
+This project stands on the shoulders of giants. We explicitly credit the following open-source projects:
+
+*   **[Open Quantum Safe](https://openquantumsafe.org/):** For `liboqs` and the OQS-OpenSSL fork. (MIT License)
+*   **[gRPC](https://grpc.io/):** For the high-performance RPC framework. (Apache 2.0 License)
+*   **[nlohmann/json](https://github.com/nlohmann/json):** For JSON parsing. (MIT License)
+*   **[cpp-httplib](https://github.com/yhirose/cpp-httplib):** For the HTTP/REST gateway. (MIT License)
+*   **[SQLite](https://www.sqlite.org/):** For the database engine. (Public Domain)
+
+
+Special thanks to [@Mester-Oxdan](https://github.com/Mester-Oxdan) for providing the system and compilation support!
+
+
+**Disclaimer:** While this project uses **NIST-selected algorithms** (CRYSTALS-Dilithium), the software itself has not undergone FIPS 140-3 certification. It is intended for industrial research and forward-looking security implementation.
